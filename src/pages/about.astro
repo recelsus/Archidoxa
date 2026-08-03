@@ -1,35 +1,12 @@
 ---
-import { site_config } from '@/config/site';
+import { about_page_config } from '@/config/about_page';
+import ConfigurablePage from '@/components/page/ConfigurablePage.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
-const social_links = site_config.social.enabled ? site_config.social.items : [];
+const about_heading = about_page_config.heading ?? 'About';
+const about_description = about_page_config.description ?? 'About this content site foundation.';
 ---
 
-<BaseLayout title="About" description="About this content site foundation." show_article_tree={false}>
-  <section class="page-section">
-    <h1>About</h1>
-    <p>
-      Archidoxa is a Markdown-first static content site foundation built with Astro.
-    </p>
-    <p>
-      External UI frameworks, CMS integrations, and authentication are outside the project scope.
-    </p>
-    {
-      social_links.length > 0 && (
-        <section class="about-social" aria-labelledby="about-social-title">
-          <h2 id="about-social-title">Social</h2>
-          <ul class="about-social__list">
-            {social_links.map((item) => (
-              <li>
-                <a href={item.href} rel="me noopener noreferrer">
-                  <span class="about-social__label">{item.label}</span>
-                  {item.handle && <span class="about-social__handle">{item.handle}</span>}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-  </section>
+<BaseLayout title={about_heading} description={about_description} show_article_tree={false}>
+  <ConfigurablePage page_config={about_page_config} heading={about_heading} description={about_description} />
 </BaseLayout>

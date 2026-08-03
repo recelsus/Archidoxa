@@ -49,6 +49,7 @@ const popup_client_index = load_popup_client_index();
       current_section_name={current_section_name}
       title={title}
       context_description={header_context_description}
+      show_article_tree={show_article_tree}
     />
     <main class="site_main">
       {
@@ -65,6 +66,34 @@ const popup_client_index = load_popup_client_index();
       </article>
       <SideNotes popup_index={popup_client_index} />
     </main>
+    {show_article_tree && <button class="mobile_tree_scrim" type="button" data_mobile_tree_close aria-label="記事ツリーを閉じる"></button>}
     <Footer />
+    {
+      show_article_tree && (
+        <script>
+          const mobile_tree_toggle = document.querySelector<HTMLButtonElement>('[data_mobile_tree_toggle]');
+          const mobile_tree_close = document.querySelector<HTMLButtonElement>('[data_mobile_tree_close]');
+
+          const set_mobile_tree_open = (is_open: boolean) => {
+            document.body.dataset.mobileTreeOpen = is_open ? 'true' : 'false';
+            mobile_tree_toggle?.setAttribute('aria-expanded', is_open ? 'true' : 'false');
+          };
+
+          mobile_tree_toggle?.addEventListener('click', () => {
+            set_mobile_tree_open(document.body.dataset.mobileTreeOpen !== 'true');
+          });
+
+          mobile_tree_close?.addEventListener('click', () => {
+            set_mobile_tree_open(false);
+          });
+
+          document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+              set_mobile_tree_open(false);
+            }
+          });
+        </script>
+      )
+    }
   </body>
 </html>

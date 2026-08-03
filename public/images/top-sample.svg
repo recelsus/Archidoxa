@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Top page sample image</title>
+  <desc id="desc">Abstract content layout sample for the top page image block.</desc>
+  <rect width="1200" height="520" fill="#151d28"/>
+  <rect x="72" y="70" width="230" height="380" rx="10" fill="#20364b"/>
+  <rect x="342" y="70" width="786" height="380" rx="10" fill="#f6f7f1"/>
+  <rect x="106" y="112" width="132" height="12" rx="6" fill="#8bd8ff"/>
+  <rect x="106" y="158" width="156" height="10" rx="5" fill="#6f8299"/>
+  <rect x="106" y="188" width="118" height="10" rx="5" fill="#6f8299"/>
+  <rect x="106" y="218" width="142" height="10" rx="5" fill="#6f8299"/>
+  <rect x="390" y="122" width="430" height="26" rx="13" fill="#20251f"/>
+  <rect x="390" y="176" width="600" height="14" rx="7" fill="#83989f"/>
+  <rect x="390" y="210" width="520" height="14" rx="7" fill="#becbcf"/>
+  <rect x="390" y="274" width="190" height="92" rx="8" fill="#d7e8ed"/>
+  <rect x="610" y="274" width="190" height="92" rx="8" fill="#e8f0f3"/>
+  <rect x="830" y="274" width="190" height="92" rx="8" fill="#d7e8ed"/>
+  <circle cx="1034" cy="136" r="44" fill="#0f6f7a"/>
+</svg>

@@ -3,7 +3,6 @@ title: "Popup Command Reference"
 description: "Multiple command annotations for checking popup and side-panel behavior."
 pub_date: "2026-07-31"
 status: "public"
-entry_layout: "article"
 tags:
   - popup
   - command

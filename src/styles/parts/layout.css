@@ -1,0 +1,26 @@
+.site_main {
+  display: grid;
+  grid-template-columns: var(--tree_width) var(--article_width) var(--notes_width);
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.article_sidebar,
+.article_region,
+.notes_region {
+  min-width: 0;
+  min-height: 0;
+}
+
+.article_sidebar {
+  overflow-y: auto;
+  border-right: 1px solid var(--rule_strong);
+  background: var(--surface_muted);
+  scrollbar-gutter: stable;
+}
+
+.article_sidebar--empty {
+  border-right: 0;
+  background: var(--surface);
+}

@@ -3,7 +3,6 @@ title: "State Matrix"
 description: "A compact public page describing draft, hidden, public, and future-dated samples."
 pub_date: "2026-07-29"
 status: "public"
-entry_layout: "memo"
 tags:
   - draft
   - hidden

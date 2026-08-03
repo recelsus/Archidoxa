@@ -1,12 +1,11 @@
 ---
-title: "Memo Layout"
-description: "A small entry that demonstrates the memo detail layout."
+title: "Short Note"
+description: "A small entry that demonstrates a compact piece of sample content."
 pub_date: "2026-08-01"
 status: "public"
-entry_layout: "memo"
 tags:
   - layout
-  - memo
+  - note
 ---
 
-This entry verifies that detail layout selection is independent from the section list layout.
+This entry provides a short page for checking simple article rendering, card links, and tag display.

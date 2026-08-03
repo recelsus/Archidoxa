@@ -1,45 +1,22 @@
 ---
 import { get_header_navigation } from '@/application/content/content_pages';
 import { site_config } from '@/config/site';
+import { top_page_config } from '@/config/top_page';
+import ConfigurablePage from '@/components/page/ConfigurablePage.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const navigation_items = await get_header_navigation(null);
 const [all_navigation_item, ...section_navigation_items] = navigation_items;
+const top_heading = top_page_config.heading ?? site_config.title;
+const top_description = top_page_config.description ?? site_config.description;
 ---
 
 <BaseLayout title={site_config.title} description={site_config.description} show_article_tree={false}>
-  <section class="page-section top-page">
-    <header class="top-page__header">
-      <h1>{site_config.title}</h1>
-      <p>{site_config.description}</p>
-      <p class="top-page__subnav">
-        <a href="/about/">About this foundation</a>
-      </p>
-    </header>
-
-    <div class="top-link-grid">
-      {all_navigation_item && (
-        <a class="top-link-card" href={all_navigation_item.href}>
-          <span class="top-link-card__label">{all_navigation_item.label}</span>
-          <span class="top-link-card__description">Browse every public entry across visible sections.</span>
-        </a>
-      )}
-      {
-        section_navigation_items.map((item) => (
-          <a class="top-link-card" href={item.href}>
-            <span class="top-link-card__label">{item.label}</span>
-            <span class="top-link-card__description">Browse {item.label.toLowerCase()} entries.</span>
-          </a>
-        ))
-      }
-    </div>
-
-    <section class="top-page__note" aria-labelledby="top-scope-title">
-      <h2 id="top-scope-title">Scope</h2>
-      <p>
-        This project is a Markdown-first static content site foundation. React, other UI frameworks,
-        CMS integrations, database-backed features, and authentication are outside the active scope.
-      </p>
-    </section>
-  </section>
+  <ConfigurablePage
+    page_config={top_page_config}
+    heading={top_heading}
+    description={top_description}
+    all_navigation_item={all_navigation_item}
+    section_navigation_items={section_navigation_items}
+  />
 </BaseLayout>

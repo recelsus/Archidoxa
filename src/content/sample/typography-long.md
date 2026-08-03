@@ -3,7 +3,6 @@ title: "Typography Long Form"
 description: "A longer article for checking reading rhythm, line length, and scroll behavior."
 pub_date: "2026-07-30"
 status: "public"
-entry_layout: "article"
 hero_image: "./images/typography.svg"
 hero_image_alt: "Long form typography thumbnail"
 tags:

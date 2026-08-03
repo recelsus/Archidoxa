@@ -3,7 +3,6 @@ title: "Panel Scroll"
 description: "A note with a popup designed to add taller content to the side panel."
 pub_date: "2026-07-30"
 status: "public"
-entry_layout: "memo"
 tags:
   - sidebar
   - popup

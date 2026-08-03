@@ -1,6 +1,7 @@
 export interface SiteConfig {
   title: string;
   description: string;
+  footer_text: string;
   theme: SiteTheme;
   social: SocialConfig;
 }
@@ -21,7 +22,8 @@ export interface SocialLinkConfig {
 export const site_config: SiteConfig = {
   title: 'Archidoxa',
   description: 'Markdown-first static content site foundation.',
-  theme: 'dark',
+  footer_text: 'static Astro content foundation',
+  theme: 'light',
   social: {
     enabled: true,
     items: [

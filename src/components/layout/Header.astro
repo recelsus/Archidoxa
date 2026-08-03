@@ -1,19 +1,36 @@
 ---
 import { get_header_navigation } from '@/application/content/content_pages';
+import { site_config } from '@/config/site';
 
 interface Props {
   current_section_name: string | null;
   title: string;
   context_description?: string | null;
+  show_article_tree?: boolean;
 }
 
-const { current_section_name, title, context_description = null } = Astro.props;
+const { current_section_name, title, context_description = null, show_article_tree = true } = Astro.props;
 const navigation_items = await get_header_navigation(current_section_name);
 const header_context = context_description ? `${title} - ${context_description}` : title;
 ---
 
 <header class="site_header">
-  <a class="site_title" href="/">reArchidoxis</a>
+  <div class="site_brand">
+    {
+      show_article_tree && (
+        <button
+          class="mobile_tree_button"
+          type="button"
+          data_mobile_tree_toggle
+          aria-label="記事ツリーを開く"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+        </button>
+      )
+    }
+    <a class="site_title" href="/">{site_config.title}</a>
+  </div>
   <div class="header_context">{header_context}</div>
   <nav class="site_header_nav" aria-label="Primary navigation">
     <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Top</a>
@@ -26,7 +43,9 @@ const header_context = context_description ? `${title} - ${context_description}`
     }
     <a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About</a>
   </nav>
-  <button class="theme_button" type="button" data_theme_toggle aria-label="テーマを切り替え">theme</button>
+  <button class="theme_button" type="button" data_theme_toggle aria-label="テーマを切り替え">
+    <span class="theme_button__icon" aria-hidden="true"></span>
+  </button>
 </header>
 
 <script>
@@ -40,7 +59,7 @@ const header_context = context_description ? `${title} - ${context_description}`
     }
 
     const theme = current_theme();
-    theme_toggle.textContent = theme;
+    theme_toggle.dataset.currentTheme = theme;
     theme_toggle.setAttribute('aria-label', `${theme === 'dark' ? 'ライト' : 'ダーク'}テーマに切り替え`);
   };
 

@@ -3,7 +3,6 @@ title: "Section Tree"
 description: "A guide for checking selected-section tree behavior and the global All view."
 pub_date: "2026-07-30"
 status: "public"
-entry_layout: "article"
 tags:
   - tree
   - all

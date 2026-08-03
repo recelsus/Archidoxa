@@ -1,4 +1,4 @@
-# Archidoxa
+# reArchidoxis
 
 Astroテンプレート
 
@@ -7,18 +7,27 @@ Astroテンプレート
 - `src/config/site.ts`
   - サイト名
   - サイト説明
+  - フッター文言
   - light/dark テーマ
-  - About に表示する SNS アカウント
+  - Aboutに表示するSNSアカウント
 - `src/config/content_sections.ts`
   - 記事カテゴリ
   - 一覧での表示名
   - 1ページあたりの記事数
   - 一覧レイアウト
+- `src/config/top_page.ts`
+  - TOPページの見出し
+  - TOPページのリンク
+  - TOPページの本文ブロック
+- `src/config/about_page.ts`
+  - Aboutページの見出し
+  - Aboutページのリンク
+  - Aboutページの本文ブロック
 - `src/content/sample/`
   - サンプル記事
   - 記事用画像
 - `src/pages/about.astro`
-  - About ページ本文
+  - Aboutページ本文
 
 ## Config
 
@@ -26,8 +35,9 @@ Astroテンプレート
 
 ```ts
 export const site_config = {
-  title: 'Archidoxa',
+  title: 'reArchidoxis',
   description: 'Markdown-first static content site foundation.',
+  footer_text: 'static Astro content foundation / no client framework, CMS, or authentication',
   theme: 'dark',
   social: {
     enabled: true,
@@ -44,6 +54,67 @@ export const site_config = {
 
 `theme`は`light`または`dark`を指定します \
 SNS表示を使わない場合は,`social.enabled`を`false`にします
+
+## Top Page
+
+`src/config/top_page.ts`でTOPページの表示内容を設定します \
+Aboutページは同じフォーマットで`src/config/about_page.ts`から設定します
+
+- `heading`: TOPページの見出し 未指定の場合はサイト名を使用
+- `description`: TOPページの説明 未指定の場合はサイト説明を使用
+- `links`: ヘッダー直下に置くリンク 初期状態では未設定
+- `sections`: TOPページの固定ブロック配列 配列順で表示順を変更
+
+本文ブロック:
+
+```ts
+{
+  kind: 'text',
+  heading: 'Scope',
+  body: ['本文'],
+}
+```
+
+記事カテゴリ一覧ブロック:
+
+```ts
+{
+  kind: 'content_links',
+  show_all_entries_link: true,
+  show_content_section_links: true,
+}
+```
+
+画像ブロック:
+
+```ts
+{
+  kind: 'image',
+  src: '/images/top-sample.svg',
+  alt: '画像の説明',
+  caption: '任意のキャプション',
+}
+```
+
+SNSブロック:
+
+```ts
+{
+  kind: 'social_links',
+  heading: 'Social',
+}
+```
+
+SNSブロックはTOP/ABOUTどちらにも配置できます \
+表示内容は`src/config/site.ts`の`social`設定を利用します
+
+区切り線ブロック:
+
+```ts
+{
+  kind: 'divider',
+}
+```
 
 ## Category
 
@@ -77,7 +148,6 @@ title: "記事タイトル"
 description: "一覧と検索に使う短い説明"
 pub_date: "2026-08-03"
 status: "public"
-entry_layout: "article"
 tags:
   - sample
   - markdown
@@ -93,7 +163,6 @@ tags:
 - `pub_date`: 公開日 表示形式は `yyyy/MM/dd`
 - `updated_date`: 更新日を出したい場合に指定
 - `status`: `public` / `draft` / `hidden`
-- `entry_layout`: `article` / `memo`
 - `tags`: 検索やタグクリックに使うタグ
 - `hero_image`: カードに表示する画像
 - `hero_image_alt`: 画像の代替テキスト
@@ -186,7 +255,7 @@ social: {
 `src/content/sample/` には表示確認用の記事が入っています
 
 - 通常記事
-- 短い memo
+- 短いnote
 - 長文記事
 - 長いタイトルの記事
 - 画像ありの記事

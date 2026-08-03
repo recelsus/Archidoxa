@@ -1,21 +1,21 @@
 ---
 import type { EntryDetailViewModel } from '@/application/content/entry_view_models';
-import ArticleEntryLayout from './entry/ArticleEntryLayout.astro';
-import MemoEntryLayout from './entry/MemoEntryLayout.astro';
+import { to_yyyy_mm_dd } from '@/core/date_format';
 
 interface Props {
   entry: EntryDetailViewModel;
 }
 
 const { entry } = Astro.props;
-const entry_layout_registry = {
-  article: ArticleEntryLayout,
-  memo: MemoEntryLayout,
-};
-const EntryComponent =
-  entry_layout_registry[entry.resolved_entry_layout as keyof typeof entry_layout_registry] ?? ArticleEntryLayout;
 ---
 
-<EntryComponent entry={entry}>
-  <slot />
-</EntryComponent>
+<article class="entry-detail">
+  <header class="entry-detail__header">
+    <h1>{entry.title}</h1>
+    <p><time datetime={entry.published_at}>{to_yyyy_mm_dd(entry.published_at)}</time></p>
+    {entry.description && <p>{entry.description}</p>}
+  </header>
+  <div class="entry-detail__body">
+    <slot />
+  </div>
+</article>

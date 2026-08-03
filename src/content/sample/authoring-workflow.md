@@ -3,7 +3,6 @@ title: "Authoring Workflow"
 description: "A sample guide that shows how an article can move from outline to publication."
 pub_date: "2026-07-29"
 status: "public"
-entry_layout: "article"
 tags:
   - markdown
   - workflow

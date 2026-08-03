@@ -3,7 +3,6 @@ title: "Keyboard Focus"
 description: "A compact note for checking keyboard access to popup links."
 pub_date: "2026-07-26"
 status: "public"
-entry_layout: "memo"
 tags:
   - keyboard
   - focus

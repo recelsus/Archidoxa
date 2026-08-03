@@ -1,0 +1,111 @@
+---
+import type { HeaderNavigationItem } from '@/application/content/content_pages';
+import type { ConfigurablePageConfig } from '@/config/page_config';
+import { site_config } from '@/config/site';
+
+interface Props {
+  page_config: ConfigurablePageConfig;
+  heading: string;
+  description: string;
+  all_navigation_item?: HeaderNavigationItem;
+  section_navigation_items?: HeaderNavigationItem[];
+}
+
+const {
+  page_config,
+  heading,
+  description,
+  all_navigation_item = undefined,
+  section_navigation_items = [],
+} = Astro.props;
+const social_links = site_config.social.enabled ? site_config.social.items : [];
+---
+
+<section class="page-section config-page">
+  <header class="config-page__header">
+    <h1>{heading}</h1>
+    <p>{description}</p>
+    {
+      page_config.links.length > 0 && (
+        <nav class="config-page__subnav" aria-label="Page links">
+          {page_config.links.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+        </nav>
+      )
+    }
+  </header>
+
+  {
+    page_config.sections.map((section) => {
+      if (section.kind === 'content_links') {
+        return (
+          (section.show_all_entries_link || section.show_content_section_links) && (
+            <div class="config-link-grid">
+              {section.show_all_entries_link && all_navigation_item && (
+                <a class="config-link-card" href={all_navigation_item.href}>
+                  <span class="config-link-card__label">{all_navigation_item.label}</span>
+                  <span class="config-link-card__description">
+                    Browse every public entry across visible sections.
+                  </span>
+                </a>
+              )}
+              {
+                section.show_content_section_links && section_navigation_items.map((item) => (
+                  <a class="config-link-card" href={item.href}>
+                    <span class="config-link-card__label">{item.label}</span>
+                    <span class="config-link-card__description">Browse {item.label.toLowerCase()} entries.</span>
+                  </a>
+                ))
+              }
+            </div>
+          )
+        );
+      }
+
+      if (section.kind === 'image') {
+        const image = <img src={section.src} alt={section.alt} loading="lazy" decoding="async" />;
+
+        return (
+          <figure class="config-page__image">
+            {section.href ? <a href={section.href}>{image}</a> : image}
+            {section.caption && <figcaption>{section.caption}</figcaption>}
+          </figure>
+        );
+      }
+
+      if (section.kind === 'divider') {
+        return <div class="config-page__divider" aria-hidden="true"></div>;
+      }
+
+      if (section.kind === 'social_links') {
+        return (
+          social_links.length > 0 && (
+            <section class="config-page__note config-social">
+              {section.heading && <h2>{section.heading}</h2>}
+              <ul class="config-social__list">
+                {social_links.map((item) => (
+                  <li>
+                    <a href={item.href} rel="me noopener noreferrer">
+                      <span class="config-social__label">{item.label}</span>
+                      {item.handle && <span class="config-social__handle">{item.handle}</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        );
+      }
+
+      return (
+        <section class="config-page__note">
+          {section.heading && <h2>{section.heading}</h2>}
+          {section.body.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </section>
+      );
+    })
+  }
+</section>

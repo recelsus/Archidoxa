@@ -3,7 +3,6 @@ title: "Future Publication"
 description: "A future-dated article that should not be generated yet."
 pub_date: "2099-01-01"
 status: "public"
-entry_layout: "article"
 tags:
   - future
   - state

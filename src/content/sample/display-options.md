@@ -3,7 +3,6 @@ title: "Display Options"
 description: "A popup sample that demonstrates comment stripping options."
 pub_date: "2026-07-28"
 status: "public"
-entry_layout: "memo"
 tags:
   - popup
   - options

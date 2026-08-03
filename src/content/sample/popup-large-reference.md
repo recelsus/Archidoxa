@@ -3,7 +3,6 @@ title: "Popup Large Reference"
 description: "Large popup definitions for popup size, syntax, and side-note scrolling checks."
 pub_date: "2026-07-28"
 status: "public"
-entry_layout: "article"
 tags:
   - popup
   - scroll

@@ -3,7 +3,6 @@ title: "Static Routes"
 description: "A compact note about generated static routes."
 pub_date: "2026-07-28"
 status: "public"
-entry_layout: "memo"
 tags:
   - build
   - routes

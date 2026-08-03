@@ -3,7 +3,6 @@ title: "Long Guide Title with Thumbnail for Verifying Multi-Line Card Headings a
 description: "A sample entry with a deliberately long title and a thumbnail."
 pub_date: "2026-07-27"
 status: "public"
-entry_layout: "article"
 hero_image: "./images/navigation.svg"
 hero_image_alt: "Navigation layout thumbnail"
 tags:

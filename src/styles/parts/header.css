@@ -1,0 +1,189 @@
+.site_header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+  padding-inline: 12px;
+  border-bottom: 1px solid var(--rule_strong);
+  background: var(--surface);
+}
+
+.site_brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+}
+
+.site_title {
+  color: inherit;
+  font-family: var(--font_serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mobile_tree_button {
+  display: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.mobile_tree_button span {
+  display: block;
+  position: relative;
+  width: 15px;
+  height: 13px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+}
+
+.mobile_tree_button span::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 4px;
+  width: 1.5px;
+  background: currentColor;
+}
+
+.mobile_tree_button span::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 3px;
+  inset-inline-start: -5px;
+  width: 4px;
+  height: 4px;
+  border-inline-start: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.mobile_tree_button {
+  gap: 0;
+}
+
+.mobile_tree_button:hover,
+.mobile_tree_button:focus-visible {
+  border-color: var(--rule_strong);
+  color: var(--text);
+  outline: 0;
+  background: var(--background);
+}
+
+.mobile_tree_scrim {
+  display: none;
+}
+
+.header_context {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--font_mono);
+  font-size: 0.7rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site_header_nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow: hidden;
+  font-family: var(--font_mono);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.site_header_nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site_header_nav a[aria-current='page'] {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.theme_button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.theme_button__icon {
+  display: block;
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+
+.theme_button[data-current-theme='light'] .theme_button__icon {
+  border: 1.8px solid currentColor;
+  border-radius: 50%;
+}
+
+.theme_button[data-current-theme='light'] .theme_button__icon::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  background:
+    linear-gradient(currentColor, currentColor) center top / 1.5px 3px no-repeat,
+    linear-gradient(currentColor, currentColor) center bottom / 1.5px 3px no-repeat,
+    linear-gradient(currentColor, currentColor) left center / 3px 1.5px no-repeat,
+    linear-gradient(currentColor, currentColor) right center / 3px 1.5px no-repeat;
+}
+
+.theme_button[data-current-theme='light'] .theme_button__icon::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  background:
+    linear-gradient(45deg, transparent 44%, currentColor 44% 56%, transparent 56%) left top / 4px 4px no-repeat,
+    linear-gradient(-45deg, transparent 44%, currentColor 44% 56%, transparent 56%) right top / 4px 4px no-repeat,
+    linear-gradient(-45deg, transparent 44%, currentColor 44% 56%, transparent 56%) left bottom / 4px 4px no-repeat,
+    linear-gradient(45deg, transparent 44%, currentColor 44% 56%, transparent 56%) right bottom / 4px 4px no-repeat;
+}
+
+.theme_button[data-current-theme='dark'] .theme_button__icon {
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.theme_button[data-current-theme='dark'] .theme_button__icon::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -2px;
+  inset-inline-start: 5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.theme_button:hover,
+.theme_button:focus-visible {
+  border-color: var(--rule_strong);
+  color: var(--text);
+  outline: 0;
+  background: var(--background);
+}

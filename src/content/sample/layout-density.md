@@ -3,7 +3,6 @@ title: "Layout Density"
 description: "A public article for checking longer lists, page rhythm, and sidebar density."
 pub_date: "2026-07-31"
 status: "public"
-entry_layout: "article"
 tags:
   - density
   - sidebar

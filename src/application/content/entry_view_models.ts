@@ -1,4 +1,4 @@
-import { entry_layout_registry, layout_defaults, list_layout_registry } from '@/config/layouts';
+import { layout_defaults, list_layout_registry } from '@/config/layouts';
 import { resolve_layout } from '@/core/resolve_layout';
 import { to_entry_href, to_tag_href } from '@/core/routes';
 
@@ -7,7 +7,6 @@ export interface ContentEntryData {
   description?: string;
   pub_date: Date;
   updated_date?: Date;
-  entry_layout?: string;
   hero_image?: ContentImage;
   hero_image_alt?: string;
   tags: string[];
@@ -45,7 +44,6 @@ export interface EntryDetailViewModel {
   title: string;
   description: string | null;
   published_at: string;
-  resolved_entry_layout: string;
   source: {
     section_name: string;
     entry_id: string;
@@ -80,17 +78,10 @@ export function to_entry_detail_view_model(
   section_name: string,
   entry: ContentEntryLike,
 ): EntryDetailViewModel {
-  const resolved_layout = resolve_layout(
-    entry.data.entry_layout,
-    layout_defaults.entry_layout,
-    entry_layout_registry,
-  );
-
   return {
     title: entry.data.title,
     description: entry.data.description ?? null,
     published_at: entry.data.pub_date.toISOString(),
-    resolved_entry_layout: resolved_layout.resolved_layout,
     source: {
       section_name,
       entry_id: entry.id,

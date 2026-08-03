@@ -1,0 +1,18 @@
+.site_footer {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding-inline: 12px;
+  overflow: hidden;
+  border-top: 1px solid var(--rule_strong);
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--font_mono);
+  font-size: 0.64rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site_footer p {
+  margin: 0;
+}

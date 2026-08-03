@@ -1,0 +1,286 @@
+pre {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  background: var(--code_background);
+  color: var(--code_text);
+  font-family: var(--font_mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+.code_copy_button {
+  position: absolute;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--code_text) 32%, transparent);
+  color: var(--code_text);
+  background: color-mix(in srgb, var(--code_background) 82%, var(--surface));
+  cursor: pointer;
+  font-family: var(--font_mono);
+  font-size: 0.82rem;
+  line-height: 1;
+  opacity: 0.72;
+}
+
+.code_copy_button::after {
+  content: attr(data-copy-state);
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: calc(100% + 6px);
+  min-width: max-content;
+  padding: 3px 6px;
+  border: 1px solid color-mix(in srgb, var(--code_text) 28%, transparent);
+  color: var(--code_text);
+  background: var(--code_background);
+  font-size: 0.62rem;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.code_copy_button[data-copy-state]::after {
+  opacity: 1;
+}
+
+.code_copy_button:hover,
+.code_copy_button:focus-visible {
+  opacity: 1;
+  outline: 0;
+  border-color: var(--code_text);
+}
+
+.astro-code {
+  background: var(--code_background) !important;
+  color: var(--code_text) !important;
+}
+
+code {
+  font-family: var(--font_mono);
+}
+
+:not(pre) > code {
+  padding: 0.08em 0.3em;
+  border: 1px solid var(--rule);
+  background: var(--background);
+  font-size: 0.88em;
+}
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.5rem 1rem;
+  border-inline-start: 3px solid var(--accent);
+  color: var(--quote_text);
+  background: var(--background);
+}
+
+.annotation_target {
+  position: relative;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.2em;
+  cursor: help;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.annotation_target[data-is-pinned='true'],
+.annotation_target[data_is_pinned='true'] {
+  background: color-mix(in srgb, var(--selected) 70%, transparent);
+}
+
+.annotation_popup {
+  position: fixed;
+  z-index: 10000;
+  inset: auto;
+  top: -9999px;
+  left: -9999px;
+  width: max-content;
+  min-width: 14rem;
+  max-width: min(34rem, 65vw);
+  padding: 9px 11px;
+  visibility: hidden;
+  opacity: 0;
+  border: 1px solid var(--rule_strong);
+  background: var(--code_background);
+  box-shadow: 0 7px 22px var(--shadow);
+  color: var(--code_text);
+  font-family: var(--font_mono);
+  font-size: 0.72rem;
+  line-height: 1.55;
+  pointer-events: auto;
+  user-select: text;
+  white-space: pre-wrap;
+}
+
+.annotation_popup::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 100%;
+  height: 8px;
+}
+
+.annotation_popup code {
+  font: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.annotation_target[data-popup-open='true'] .annotation_popup {
+  visibility: visible;
+  opacity: 1;
+}
+
+.notes_region {
+  overflow-y: auto;
+  padding: 14px clamp(18px, 2vw, 34px) 72px clamp(10px, 1.2vw, 22px);
+  background: var(--surface);
+  scrollbar-gutter: stable;
+}
+
+.notes_toolbar {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 30rem;
+  margin: 0 auto 10px;
+}
+
+.notes_placeholder {
+  max-width: 28rem;
+  margin-inline: auto;
+  padding-block-start: 1rem;
+  color: color-mix(in srgb, var(--muted) 45%, transparent);
+  font-family: var(--font_mono);
+  font-size: 0.68rem;
+  line-height: 1.6;
+  user-select: none;
+}
+
+.notes_status {
+  position: sticky;
+  bottom: 0;
+  max-width: 30rem;
+  margin: 12px auto 0;
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--surface) 86%, var(--selected));
+  color: var(--muted);
+  font-family: var(--font_mono);
+  font-size: 0.68rem;
+  line-height: 1.45;
+  box-shadow: 0 5px 14px var(--shadow_soft);
+}
+
+.side_note {
+  max-width: 30rem;
+  margin: 0 auto 14px;
+  border: 1px solid var(--rule_strong);
+  background: var(--surface);
+  box-shadow: none;
+}
+
+.side_note[data_dragging='true'] {
+  opacity: 0.46;
+}
+
+.side_note[data_drop_position='before'] {
+  border-top-color: var(--accent);
+  border-top-width: 3px;
+}
+
+.side_note[data_drop_position='after'] {
+  border-bottom-color: var(--accent);
+  border-bottom-width: 3px;
+}
+
+.side_note_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  padding: 5px 7px 5px 10px;
+  border-bottom: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--surface_muted) 55%, var(--surface));
+  cursor: grab;
+  user-select: none;
+}
+
+.side_note_header:active {
+  cursor: grabbing;
+}
+
+.side_note_title {
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font_mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.side_note_actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 3px;
+}
+
+.side_note_button {
+  min-width: 28px;
+  height: 24px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font_mono);
+  font-size: 0.65rem;
+}
+
+.side_note_button:hover,
+.side_note_button:focus-visible {
+  border-color: var(--rule);
+  color: var(--text);
+  outline: 0;
+  background: var(--background);
+}
+
+.side_note_content {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 0;
+  background: var(--code_background);
+  color: var(--code_text);
+  font-family: var(--font_mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  user-select: text;
+  white-space: pre-wrap;
+}
+
+.side_note_content code {
+  font: inherit;
+}
+
+.syntax_command {
+  color: var(--syntax_command);
+}
+
+.syntax_comment {
+  color: var(--syntax_comment);
+}

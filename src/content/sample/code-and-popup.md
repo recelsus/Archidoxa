@@ -4,7 +4,6 @@ description: "A sample page for command snippets, popups, side notes, and commen
 pub_date: "2026-08-02"
 updated_date: "2026-08-03"
 status: "public"
-entry_layout: "article"
 hero_image: "./images/popup-reference.svg"
 hero_image_alt: "Popup reference interface thumbnail"
 tags:
