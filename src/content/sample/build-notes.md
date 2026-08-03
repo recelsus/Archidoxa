@@ -4,7 +4,6 @@ description: "A compact note that records the basic commands for this static tem
 pub_date: "2026-08-02"
 status: "public"
 entry_layout: "memo"
-category: "operations"
 tags:
   - build
   - static

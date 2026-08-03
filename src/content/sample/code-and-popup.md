@@ -7,7 +7,6 @@ status: "public"
 entry_layout: "article"
 hero_image: "./images/popup-reference.svg"
 hero_image_alt: "Popup reference interface thumbnail"
-category: "reference"
 tags:
   - popup
   - code

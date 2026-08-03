@@ -4,7 +4,6 @@ description: "A hidden article used to confirm that private reference material c
 pub_date: "2026-08-03"
 status: "hidden"
 entry_layout: "article"
-category: "state"
 tags:
   - hidden
   - reference

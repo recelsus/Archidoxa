@@ -36,7 +36,7 @@ const month_labels = [
                   class="tree_item"
                   href={item.href}
                   aria-current={item.current ? 'page' : undefined}
-                  data_search_text={[item.title, item.description, item.category, ...item.tags]
+                  data_search_text={[item.title, item.description, ...item.tags]
                     .filter(Boolean)
                     .join(' ')}
                 >
@@ -68,7 +68,7 @@ const month_labels = [
                 <a
                   class="tree_item tree_item--month"
                   href={item.href}
-                  data_search_text={[item.title, item.description, item.category, item.section_label, ...item.tags]
+                  data_search_text={[item.title, item.description, item.section_label, ...item.tags]
                     .filter(Boolean)
                     .join(' ')}
                 >

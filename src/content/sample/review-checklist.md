@@ -4,7 +4,6 @@ description: "A short sample note for final visual and behavior checks."
 pub_date: "2026-07-31"
 status: "public"
 entry_layout: "memo"
-category: "review"
 tags:
   - checklist
   - review

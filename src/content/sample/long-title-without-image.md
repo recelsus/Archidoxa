@@ -4,7 +4,6 @@ description: "A sample entry with a deliberately long title and a generated fall
 pub_date: "2026-07-27"
 status: "public"
 entry_layout: "memo"
-category: "layout"
 tags:
   - card
   - wrapping

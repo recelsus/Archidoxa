@@ -7,7 +7,6 @@ status: "public"
 entry_layout: "memo"
 hero_image: "./images/navigation.svg"
 hero_image_alt: "Navigation layout thumbnail"
-category: "navigation"
 tags:
   - tree
   - routing

@@ -4,7 +4,6 @@ description: "A small entry that demonstrates the memo detail layout."
 pub_date: "2026-08-01"
 status: "public"
 entry_layout: "memo"
-category: "layout"
 tags:
   - layout
   - memo

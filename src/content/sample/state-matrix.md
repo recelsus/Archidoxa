@@ -4,7 +4,6 @@ description: "A compact public page describing draft, hidden, public, and future
 pub_date: "2026-07-29"
 status: "public"
 entry_layout: "memo"
-category: "state"
 tags:
   - draft
   - hidden

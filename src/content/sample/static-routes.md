@@ -4,7 +4,6 @@ description: "A compact note about generated static routes."
 pub_date: "2026-07-28"
 status: "public"
 entry_layout: "memo"
-category: "routing"
 tags:
   - build
   - routes

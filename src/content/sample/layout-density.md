@@ -4,7 +4,6 @@ description: "A public article for checking longer lists, page rhythm, and sideb
 pub_date: "2026-07-31"
 status: "public"
 entry_layout: "article"
-category: "layout"
 tags:
   - density
   - sidebar

@@ -4,7 +4,6 @@ description: "A sample guide that shows how an article can move from outline to 
 pub_date: "2026-07-29"
 status: "public"
 entry_layout: "article"
-category: "authoring"
 tags:
   - markdown
   - workflow
@@ -14,7 +13,7 @@ This sample article describes a simple writing workflow for a static knowledge s
 
 Start with a small outline. A useful outline names the reader, the expected outcome, and the minimum supporting detail. This keeps the first draft focused and makes later review faster.
 
-Next, write the first version in Markdown. The frontmatter controls title, description, publication state, tags, category, and layout. The body should stay readable even when side panels are visible.
+Next, write the first version in Markdown. The frontmatter controls title, description, publication state, tags, and layout. The content section is determined by the directory that contains the file.
 
 Before publishing, run the basic checks used by this template:
 

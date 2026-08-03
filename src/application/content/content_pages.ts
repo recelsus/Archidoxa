@@ -28,7 +28,6 @@ export interface ArticleTreeItem {
   description: string | null;
   published_at: string;
   tags: string[];
-  category: string | null;
   current: boolean;
 }
 
@@ -134,7 +133,6 @@ export async function get_article_tree_items(options: {
         description: entry.data.description ?? null,
         published_at: entry.data.pub_date.toISOString(),
         tags: entry.data.tags,
-        category: entry.data.category ?? null,
         current: options.current_section_name === section.name && options.current_entry_id === entry.id,
       });
     });

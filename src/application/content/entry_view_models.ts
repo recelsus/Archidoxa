@@ -11,7 +11,6 @@ export interface ContentEntryData {
   hero_image?: ContentImage;
   hero_image_alt?: string;
   tags: string[];
-  category?: string;
 }
 
 export interface ContentImage {

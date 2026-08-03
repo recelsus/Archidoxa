@@ -4,7 +4,6 @@ description: "A compact popup note for copy behavior checks."
 pub_date: "2026-07-27"
 status: "public"
 entry_layout: "memo"
-category: "panel"
 tags:
   - popup
   - copy

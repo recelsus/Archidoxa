@@ -4,7 +4,6 @@ description: "A first public entry for the static content template."
 pub_date: "2026-08-02"
 status: "public"
 entry_layout: "article"
-category: "foundation"
 tags:
   - foundation
   - sample

@@ -12,6 +12,5 @@ export function make_common_content_schema({ image }: SchemaContext) {
     hero_image: image().optional(),
     hero_image_alt: z.string().optional(),
     tags: z.array(z.string()).default([]),
-    category: z.string().optional(),
   });
 }

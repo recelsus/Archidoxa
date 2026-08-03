@@ -4,7 +4,6 @@ description: "Large popup definitions for popup size, syntax, and side-note scro
 pub_date: "2026-07-28"
 status: "public"
 entry_layout: "article"
-category: "reference"
 tags:
   - popup
   - scroll

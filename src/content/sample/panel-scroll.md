@@ -4,7 +4,6 @@ description: "A note with a popup designed to add taller content to the side pan
 pub_date: "2026-07-30"
 status: "public"
 entry_layout: "memo"
-category: "panel"
 tags:
   - sidebar
   - popup

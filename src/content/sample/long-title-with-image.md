@@ -6,7 +6,6 @@ status: "public"
 entry_layout: "article"
 hero_image: "./images/navigation.svg"
 hero_image_alt: "Navigation layout thumbnail"
-category: "layout"
 tags:
   - card
   - wrapping

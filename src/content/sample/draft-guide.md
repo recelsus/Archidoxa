@@ -4,7 +4,6 @@ description: "A draft article that validates but does not appear in public pages
 pub_date: "2026-08-02"
 status: "draft"
 entry_layout: "article"
-category: "state"
 tags:
   - draft
   - state

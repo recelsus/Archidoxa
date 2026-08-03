@@ -6,7 +6,6 @@ status: "public"
 entry_layout: "article"
 hero_image: "./images/typography.svg"
 hero_image_alt: "Long form typography thumbnail"
-category: "reading"
 tags:
   - typography
   - longform
