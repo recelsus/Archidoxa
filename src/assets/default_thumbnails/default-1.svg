@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 1</title>
+  <desc id="desc">A structured index thumbnail with amber highlights and ruled columns.</desc>
+  <rect width="960" height="540" fill="#f3efe4"/>
+  <rect x="86" y="70" width="232" height="400" fill="#fffaf0" stroke="#b7a86d" stroke-width="3"/>
+  <rect x="364" y="70" width="510" height="400" fill="#fffaf0" stroke="#b7a86d" stroke-width="3"/>
+  <rect x="126" y="118" width="152" height="24" fill="#8b6f1f"/>
+  <rect x="404" y="118" width="300" height="24" fill="#8b6f1f"/>
+  <g fill="#d9c87a">
+    <rect x="126" y="184" width="118" height="18"/>
+    <rect x="126" y="226" width="154" height="18"/>
+    <rect x="126" y="268" width="96" height="18"/>
+    <rect x="404" y="184" width="392" height="18"/>
+    <rect x="404" y="226" width="336" height="18"/>
+    <rect x="404" y="268" width="420" height="18"/>
+  </g>
+</svg>

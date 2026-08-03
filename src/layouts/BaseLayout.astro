@@ -1,0 +1,70 @@
+---
+import Footer from '@/components/layout/Footer.astro';
+import Header from '@/components/layout/Header.astro';
+import ArticleTree from '@/components/navigation/ArticleTree.astro';
+import SideNotes from '@/components/reference/SideNotes.astro';
+import { site_config } from '@/config/site';
+import { load_popup_client_index } from '@/infrastructure/popup/popup_index_repository';
+import '@/styles/base.css';
+
+interface Props {
+  title?: string;
+  description?: string | null;
+  current_section_name?: string | null;
+  current_entry_id?: string | null;
+  show_article_tree?: boolean;
+  header_context_description?: string | null;
+}
+
+const {
+  title = site_config.title,
+  description = site_config.description,
+  current_section_name = null,
+  current_entry_id = null,
+  show_article_tree = true,
+  header_context_description = null,
+} = Astro.props;
+const page_title = title === site_config.title ? title : `${title} | ${site_config.title}`;
+const popup_client_index = load_popup_client_index();
+---
+
+<!doctype html>
+<html lang="ja" data-theme={site_config.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description ?? site_config.description} />
+    <title>{page_title}</title>
+    <script is:inline>
+      (() => {
+        const stored_theme = window.localStorage.getItem('site_theme');
+        if (stored_theme === 'light' || stored_theme === 'dark') {
+          document.documentElement.dataset.theme = stored_theme;
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header
+      current_section_name={current_section_name}
+      title={title}
+      context_description={header_context_description}
+    />
+    <main class="site_main">
+      {
+        show_article_tree ? (
+          <ArticleTree current_section_name={current_section_name} current_entry_id={current_entry_id} />
+        ) : (
+          <div class="article_sidebar article_sidebar--empty" aria-hidden="true"></div>
+        )
+      }
+      <article class="article_region">
+        <div class="article_content">
+          <slot />
+        </div>
+      </article>
+      <SideNotes popup_index={popup_client_index} />
+    </main>
+    <Footer />
+  </body>
+</html>

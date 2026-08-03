@@ -1,0 +1,32 @@
+---
+import type { PaginationViewModel } from '@/core/pagination';
+
+interface Props {
+  model: PaginationViewModel;
+  hide_single_page?: boolean;
+}
+
+const { model, hide_single_page = true } = Astro.props;
+---
+
+{
+  !(hide_single_page && model.total_pages <= 1) && (
+    <nav class="pagination" aria-label="Pagination">
+      {model.previous ? <a href={model.previous.href}>{model.previous.label}</a> : <span aria-hidden="true">Previous</span>}
+      <ol>
+        {model.items.map((item) => (
+          <li>
+            {item.type === 'ellipsis' ? (
+              <span aria-hidden="true">...</span>
+            ) : (
+              <a href={item.href} aria-current={item.current ? 'page' : undefined}>
+                {item.page}
+              </a>
+            )}
+          </li>
+        ))}
+      </ol>
+      {model.next ? <a href={model.next.href}>{model.next.label}</a> : <span aria-hidden="true">Next</span>}
+    </nav>
+  )
+}

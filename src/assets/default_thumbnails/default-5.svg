@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 5</title>
+  <desc id="desc">A neutral archive thumbnail with stacked pages and gray accents.</desc>
+  <rect width="960" height="540" fill="#eceff1"/>
+  <rect x="178" y="96" width="560" height="336" fill="#d7dde2" stroke="#8a98a4" stroke-width="3"/>
+  <rect x="222" y="70" width="560" height="336" fill="#f9faf9" stroke="#8a98a4" stroke-width="3"/>
+  <rect x="272" y="128" width="332" height="26" fill="#4b5c67"/>
+  <rect x="272" y="196" width="420" height="16" fill="#a8b4bc"/>
+  <rect x="272" y="236" width="372" height="16" fill="#c1c9cf"/>
+  <rect x="272" y="276" width="448" height="16" fill="#c1c9cf"/>
+  <rect x="272" y="342" width="162" height="42" fill="#dce6ea"/>
+  <rect x="458" y="342" width="162" height="42" fill="#dce6ea"/>
+</svg>

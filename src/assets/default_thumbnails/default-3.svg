@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 3</title>
+  <desc id="desc">A warm editorial thumbnail with rose lines and content blocks.</desc>
+  <rect width="960" height="540" fill="#f8ecec"/>
+  <rect x="96" y="82" width="768" height="376" fill="#fff8f8" stroke="#c38c8c" stroke-width="3"/>
+  <rect x="150" y="132" width="300" height="32" fill="#9f4f5f"/>
+  <rect x="150" y="206" width="646" height="16" fill="#d9aaa7"/>
+  <rect x="150" y="246" width="540" height="16" fill="#e6c4c0"/>
+  <rect x="150" y="286" width="610" height="16" fill="#e6c4c0"/>
+  <rect x="150" y="354" width="198" height="56" fill="#f1d2d0"/>
+  <rect x="382" y="354" width="198" height="56" fill="#f1d2d0"/>
+  <rect x="614" y="354" width="146" height="56" fill="#f1d2d0"/>
+</svg>

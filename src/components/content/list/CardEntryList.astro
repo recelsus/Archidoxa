@@ -1,0 +1,99 @@
+---
+import type { EntryListItemViewModel } from '@/application/content/entry_view_models';
+import default_thumbnail_0 from '@/assets/default_thumbnails/default-0.svg';
+import default_thumbnail_1 from '@/assets/default_thumbnails/default-1.svg';
+import default_thumbnail_2 from '@/assets/default_thumbnails/default-2.svg';
+import default_thumbnail_3 from '@/assets/default_thumbnails/default-3.svg';
+import default_thumbnail_4 from '@/assets/default_thumbnails/default-4.svg';
+import default_thumbnail_5 from '@/assets/default_thumbnails/default-5.svg';
+import default_thumbnail_6 from '@/assets/default_thumbnails/default-6.svg';
+import default_thumbnail_7 from '@/assets/default_thumbnails/default-7.svg';
+import default_thumbnail_8 from '@/assets/default_thumbnails/default-8.svg';
+import default_thumbnail_9 from '@/assets/default_thumbnails/default-9.svg';
+import { to_stable_index } from '@/core/stable_index';
+import { to_yyyy_mm_dd } from '@/core/date_format';
+
+interface Props {
+  entries: EntryListItemViewModel[];
+}
+
+const { entries } = Astro.props;
+const default_thumbnails = [
+  default_thumbnail_0,
+  default_thumbnail_1,
+  default_thumbnail_2,
+  default_thumbnail_3,
+  default_thumbnail_4,
+  default_thumbnail_5,
+  default_thumbnail_6,
+  default_thumbnail_7,
+  default_thumbnail_8,
+  default_thumbnail_9,
+];
+
+const to_default_thumbnail = (entry: EntryListItemViewModel) => {
+  const thumbnail = default_thumbnails[to_stable_index(entry.href, default_thumbnails.length)];
+
+  return {
+    src: thumbnail.src,
+    width: thumbnail.width,
+    height: thumbnail.height,
+    alt: '',
+  };
+};
+
+const should_show_title_ellipsis = (title: string) => title.length > 38;
+---
+
+<div class="entry-list entry-list--card">
+  {
+    entries.map((entry) => {
+      const image = entry.image ?? to_default_thumbnail(entry);
+      const description_id = `entry-card-description-${entry.href.replace(/[^a-zA-Z0-9_-]+/g, '-')}`;
+
+      return (
+        <article
+          class="entry-card"
+          data_entry_list_item
+          data_search_text={[
+            entry.title,
+            entry.description,
+            ...entry.tags.map((tag) => tag.label),
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          data_search_tags={entry.tags.map((tag) => tag.label).join(' ')}
+        >
+          <p class="entry-card__date">
+            <time datetime={entry.published_at}>{to_yyyy_mm_dd(entry.published_at)}</time>
+          </p>
+          <a class="entry-card__thumbnail" href={entry.href} aria-hidden={image.alt.length === 0 ? 'true' : undefined} tabindex={image.alt.length === 0 ? '-1' : undefined}>
+            <img
+              src={image.src}
+              width={image.width}
+              height={image.height}
+              alt={image.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <div class="entry-card__summary">
+            <h2 class:list={['entry-card__title', should_show_title_ellipsis(entry.title) && 'entry-card__title--truncated']}>
+              <a href={entry.href} data_search_field aria-describedby={entry.description ? description_id : undefined}>
+                {entry.title}
+              </a>
+            </h2>
+          </div>
+          {entry.description && <p id={description_id} class="entry-card__description_tooltip">{entry.description}</p>}
+          {entry.tags.length > 0 && (
+            <ul class="tag-list entry-card__tags" aria-label="Tags">
+              {entry.tags.map((tag) => (
+                <li><a href={tag.href} data_search_field data_search_tag_field>{tag.label}</a></li>
+              ))}
+            </ul>
+          )}
+        </article>
+      );
+    })
+  }
+</div>

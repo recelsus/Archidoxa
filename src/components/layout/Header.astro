@@ -1,0 +1,55 @@
+---
+import { get_header_navigation } from '@/application/content/content_pages';
+
+interface Props {
+  current_section_name: string | null;
+  title: string;
+  context_description?: string | null;
+}
+
+const { current_section_name, title, context_description = null } = Astro.props;
+const navigation_items = await get_header_navigation(current_section_name);
+const header_context = context_description ? `${title} - ${context_description}` : title;
+---
+
+<header class="site_header">
+  <a class="site_title" href="/">reArchidoxis</a>
+  <div class="header_context">{header_context}</div>
+  <nav class="site_header_nav" aria-label="Primary navigation">
+    <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Top</a>
+    {
+      navigation_items.map((item) => (
+        <a href={item.href} aria-current={item.current ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+    <a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About</a>
+  </nav>
+  <button class="theme_button" type="button" data_theme_toggle aria-label="テーマを切り替え">theme</button>
+</header>
+
+<script>
+  const theme_toggle = document.querySelector<HTMLButtonElement>('[data_theme_toggle]');
+
+  const current_theme = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+
+  const update_theme_button = () => {
+    if (!theme_toggle) {
+      return;
+    }
+
+    const theme = current_theme();
+    theme_toggle.textContent = theme;
+    theme_toggle.setAttribute('aria-label', `${theme === 'dark' ? 'ライト' : 'ダーク'}テーマに切り替え`);
+  };
+
+  theme_toggle?.addEventListener('click', () => {
+    const next_theme = current_theme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next_theme;
+    window.localStorage.setItem('site_theme', next_theme);
+    update_theme_button();
+  });
+
+  update_theme_button();
+</script>

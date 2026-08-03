@@ -1,0 +1,51 @@
+---
+import ContentList from '@/components/content/list/ContentList.astro';
+import Pagination from '@/components/ui/Pagination.astro';
+import { get_collection_page, get_collection_static_paths } from '@/application/content/content_pages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  return get_collection_static_paths();
+}
+
+const section_name = Astro.params.section ?? '';
+const page = Number(Astro.params.page ?? 1);
+const page_view = await get_collection_page({ section_name, page });
+---
+
+<BaseLayout
+  title={page_view.section.display_name}
+  description={page_view.section.description}
+  current_section_name={page_view.section.name}
+  header_context_description={page_view.section.description}
+>
+  <section class="page-section">
+    <header class="section-header">
+      <div class="entry_list_tools">
+        <label class="search_line entry_search_line">
+          <span class="search_prefix" aria-hidden="true">/</span>
+          <input
+            data_entry_search
+            type="search"
+            placeholder="search articles"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="記事を検索"
+          />
+        </label>
+        <p class="entry_page_indicator" data_entry_page_indicator>
+          {page_view.pagination.current_page}/{page_view.pagination.total_pages}
+        </p>
+        <p class="entry_search_status" data_entry_search_status hidden aria-live="polite"></p>
+      </div>
+    </header>
+    <ContentList
+      layout={page_view.resolved_list_layout}
+      entries={page_view.entries}
+      search_entries={page_view.search_entries}
+    />
+    <div data_entry_pagination>
+      <Pagination model={page_view.pagination} />
+    </div>
+  </section>
+</BaseLayout>

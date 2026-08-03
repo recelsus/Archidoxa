@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 4</title>
+  <desc id="desc">A green knowledge map thumbnail with connected blocks.</desc>
+  <rect width="960" height="540" fill="#eaf3ea"/>
+  <g stroke="#6f9371" stroke-width="4" fill="none">
+    <path d="M250 178h230v96h230"/>
+    <path d="M250 338h230v-64"/>
+  </g>
+  <g fill="#f7fbf6" stroke="#6f9371" stroke-width="3">
+    <rect x="104" y="132" width="224" height="92"/>
+    <rect x="368" y="228" width="224" height="92"/>
+    <rect x="632" y="132" width="224" height="92"/>
+    <rect x="104" y="292" width="224" height="92"/>
+  </g>
+  <g fill="#2f6f45">
+    <rect x="138" y="166" width="128" height="14"/>
+    <rect x="402" y="262" width="148" height="14"/>
+    <rect x="666" y="166" width="132" height="14"/>
+    <rect x="138" y="326" width="146" height="14"/>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+---
+import { render } from 'astro:content';
+
+import { get_entry_page, get_entry_static_paths } from '@/application/content/content_pages';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import EntryLayout from '@/layouts/EntryLayout.astro';
+
+export async function getStaticPaths() {
+  return get_entry_static_paths();
+}
+
+const section_name = Astro.params.section ?? '';
+const entry_id = Astro.params.slug ?? '';
+const page_view = await get_entry_page({ section_name, entry_id });
+const { Content } = await render(page_view.content_entry);
+---
+
+<BaseLayout
+  title={page_view.entry.title}
+  description={page_view.entry.description}
+  current_section_name={page_view.entry.source.section_name}
+  current_entry_id={page_view.entry.source.entry_id}
+>
+  <EntryLayout entry={page_view.entry}>
+    <Content />
+  </EntryLayout>
+</BaseLayout>

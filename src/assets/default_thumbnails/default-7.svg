@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 7</title>
+  <desc id="desc">A cyan reference thumbnail with split panes and small labels.</desc>
+  <rect width="960" height="540" fill="#e7f3f7"/>
+  <rect x="86" y="78" width="788" height="384" fill="#f8fcfd" stroke="#7fa8b5" stroke-width="3"/>
+  <rect x="86" y="78" width="224" height="384" fill="#d8edf3"/>
+  <rect x="132" y="130" width="126" height="20" fill="#17677b"/>
+  <rect x="132" y="188" width="116" height="14" fill="#7fa8b5"/>
+  <rect x="132" y="230" width="132" height="14" fill="#7fa8b5"/>
+  <rect x="360" y="132" width="332" height="24" fill="#17677b"/>
+  <rect x="360" y="202" width="438" height="16" fill="#aacbd4"/>
+  <rect x="360" y="242" width="356" height="16" fill="#c7dce2"/>
+  <rect x="360" y="314" width="190" height="48" fill="#d8edf3"/>
+  <rect x="578" y="314" width="190" height="48" fill="#d8edf3"/>
+</svg>

@@ -1,0 +1,42 @@
+---
+import type { EntryListItemViewModel } from '@/application/content/entry_view_models';
+import { to_yyyy_mm_dd } from '@/core/date_format';
+
+interface Props {
+  entries: EntryListItemViewModel[];
+}
+
+const { entries } = Astro.props;
+---
+
+<div class="entry-list entry-list--compact">
+  {
+    entries.map((entry) => (
+      <article
+        class="entry-row"
+        data_entry_list_item
+        data_search_text={[
+          entry.title,
+          entry.description,
+          ...entry.tags.map((tag) => tag.label),
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        data_search_tags={entry.tags.map((tag) => tag.label).join(' ')}
+      >
+        <time datetime={entry.published_at}>{to_yyyy_mm_dd(entry.published_at)}</time>
+        <div class="entry-row__body">
+          <h2><a href={entry.href} data_search_field>{entry.title}</a></h2>
+          {entry.description && <p data_search_field>{entry.description}</p>}
+          {entry.tags.length > 0 && (
+            <ul class="tag-list tag-list--compact" aria-label="Tags">
+              {entry.tags.map((tag) => (
+                <li><a href={tag.href} data_search_field data_search_tag_field>{tag.label}</a></li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </article>
+    ))
+  }
+</div>

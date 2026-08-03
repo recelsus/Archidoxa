@@ -1,0 +1,21 @@
+---
+import type { EntryDetailViewModel } from '@/application/content/entry_view_models';
+import { to_yyyy_mm_dd } from '@/core/date_format';
+
+interface Props {
+  entry: EntryDetailViewModel;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="entry-detail entry-detail--article">
+  <header class="entry-detail__header">
+    <p><time datetime={entry.published_at}>{to_yyyy_mm_dd(entry.published_at)}</time></p>
+    <h1>{entry.title}</h1>
+    {entry.description && <p>{entry.description}</p>}
+  </header>
+  <div class="entry-detail__body">
+    <slot />
+  </div>
+</article>

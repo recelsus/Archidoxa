@@ -1,0 +1,108 @@
+---
+import { get_article_tree_items } from '@/application/content/content_pages';
+import { to_yyyy_mm_dd } from '@/core/date_format';
+import { all_sections_name } from '@/core/routes';
+
+interface Props {
+  current_section_name: string | null;
+  current_entry_id: string | null;
+}
+
+const { current_section_name, current_entry_id } = Astro.props;
+const tree_items = await get_article_tree_items({ current_section_name, current_entry_id });
+const section_names = [...new Set(tree_items.map((item) => item.section_name))];
+const should_collapse_section_tree = current_section_name === all_sections_name;
+const month_labels = [
+  ...new Set(tree_items.map((item) => to_yyyy_mm_dd(item.published_at).slice(0, 7))),
+];
+---
+
+<aside class="article_sidebar">
+  <nav class="article_tree" aria-label="記事一覧">
+    {
+      section_names.map((section_name) => {
+        const section_items = tree_items.filter((item) => item.section_name === section_name);
+        const section_label = section_items[0]?.section_label ?? section_name;
+
+        return (
+          <section class="tree_group" data_tree_group>
+            <button class="tree_label" type="button" data_tree_toggle aria-expanded={should_collapse_section_tree ? 'false' : 'true'}>
+              <span class="tree_label_marker" aria-hidden="true">{should_collapse_section_tree ? '▶' : '▼'}</span>
+              <span>{section_label}</span>
+            </button>
+            <div class="tree_children" data_tree_children hidden={should_collapse_section_tree}>
+              {section_items.map((item) => (
+                <a
+                  class="tree_item"
+                  href={item.href}
+                  aria-current={item.current ? 'page' : undefined}
+                  data_search_text={[item.title, item.description, item.category, ...item.tags]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  {item.title}
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+    {
+      current_section_name === all_sections_name && month_labels.length > 0 && (
+        <div class="tree_divider" aria-hidden="true"></div>
+      )
+    }
+    {
+      current_section_name === all_sections_name && month_labels.map((month_label) => {
+        const month_items = tree_items.filter((item) => to_yyyy_mm_dd(item.published_at).startsWith(month_label));
+
+        return (
+          <section class="tree_group" data_tree_group>
+            <button class="tree_label" type="button" data_tree_toggle aria-expanded="false">
+              <span class="tree_label_marker" aria-hidden="true">▶</span>
+              <span>{month_label}</span>
+            </button>
+            <div class="tree_children" data_tree_children hidden>
+              {month_items.map((item) => (
+                <a
+                  class="tree_item tree_item--month"
+                  href={item.href}
+                  data_search_text={[item.title, item.description, item.category, item.section_label, ...item.tags]
+                    .filter(Boolean)
+                    .join(' ')}
+                >
+                  <span class="tree_item_title">{item.title}</span>
+                  <span class="tree_item_meta">{item.section_label}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+  </nav>
+</aside>
+
+<script>
+  const tree_groups = Array.from(document.querySelectorAll<HTMLElement>('[data_tree_group]'));
+
+  tree_groups.forEach((group) => {
+    const toggle = group.querySelector<HTMLButtonElement>('[data_tree_toggle]');
+    const children = group.querySelector<HTMLElement>('[data_tree_children]');
+    const marker = group.querySelector<HTMLElement>('.tree_label_marker');
+
+    toggle?.addEventListener('click', () => {
+      if (!children) {
+        return;
+      }
+
+      const should_collapse = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', should_collapse ? 'false' : 'true');
+      children.hidden = should_collapse;
+      if (marker) {
+        marker.textContent = should_collapse ? '▶' : '▼';
+      }
+    });
+  });
+</script>

@@ -1,0 +1,188 @@
+---
+import type { EntryListItemViewModel } from '@/application/content/entry_view_models';
+import CardEntryList from './CardEntryList.astro';
+import CompactEntryList from './CompactEntryList.astro';
+
+interface Props {
+  layout: string;
+  entries: EntryListItemViewModel[];
+  search_entries: EntryListItemViewModel[];
+}
+
+const { layout, entries, search_entries } = Astro.props;
+const list_layout_registry = {
+  card: CardEntryList,
+  compact: CompactEntryList,
+};
+const ListComponent = list_layout_registry[layout as keyof typeof list_layout_registry] ?? CardEntryList;
+---
+
+<div data_entry_current_results>
+  {
+    entries.length > 0 ? (
+      <ListComponent entries={entries} />
+    ) : (
+      <p class="entry_empty_state">No entries.</p>
+    )
+  }
+</div>
+
+<div data_entry_search_results hidden>
+  {
+    search_entries.length > 0 ? (
+      <ListComponent entries={search_entries} />
+    ) : (
+      <p class="entry_empty_state">No entries.</p>
+    )
+  }
+</div>
+
+<script>
+  const normalize_search_text = (value: string) => value.normalize('NFKC').toLowerCase();
+  const search_mark_class = 'entry_search_mark';
+  const search_input = document.querySelector<HTMLInputElement>('[data_entry_search]');
+  const search_status = document.querySelector<HTMLElement>('[data_entry_search_status]');
+  const current_results = document.querySelector<HTMLElement>('[data_entry_current_results]');
+  const search_results = document.querySelector<HTMLElement>('[data_entry_search_results]');
+  const pagination = document.querySelector<HTMLElement>('[data_entry_pagination]');
+  const page_indicator = document.querySelector<HTMLElement>('[data_entry_page_indicator]');
+  const search_result_items = Array.from(
+    search_results?.querySelectorAll<HTMLElement>('[data_entry_list_item]') ?? [],
+  );
+
+  const escape_regexp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const to_search_state = (raw_query: string) => {
+    const trimmed_query = raw_query.trim();
+    const is_tag_search = trimmed_query.startsWith('#');
+    const normalized_query = normalize_search_text(is_tag_search ? trimmed_query.slice(1).trim() : trimmed_query);
+
+    return {
+      is_tag_search,
+      normalized_query,
+      highlight_query: is_tag_search ? trimmed_query.slice(1).trim() : trimmed_query,
+    };
+  };
+
+  const restore_search_field = (field: HTMLElement) => {
+    const original_text = field.dataset.original_search_text;
+    if (original_text !== undefined) {
+      field.textContent = original_text;
+    }
+  };
+
+  const highlight_search_field = (field: HTMLElement, query: string) => {
+    if (field.dataset.original_search_text === undefined) {
+      field.dataset.original_search_text = field.textContent ?? '';
+    }
+
+    restore_search_field(field);
+
+    if (query.length === 0) {
+      return;
+    }
+
+    const text = field.dataset.original_search_text ?? '';
+    const pattern = new RegExp(escape_regexp(query), 'gi');
+    const fragment = document.createDocumentFragment();
+    let last_index = 0;
+    let match = pattern.exec(text);
+
+    while (match) {
+      if (match.index > last_index) {
+        fragment.append(document.createTextNode(text.slice(last_index, match.index)));
+      }
+
+      const mark = document.createElement('mark');
+      mark.className = search_mark_class;
+      mark.textContent = match[0];
+      fragment.append(mark);
+      last_index = match.index + match[0].length;
+      match = pattern.exec(text);
+    }
+
+    if (last_index < text.length) {
+      fragment.append(document.createTextNode(text.slice(last_index)));
+    }
+
+    field.replaceChildren(fragment);
+  };
+
+  const update_item_highlights = (item: HTMLElement, query: string, is_tag_search: boolean) => {
+    const selector = is_tag_search ? '[data_search_tag_field]' : '[data_search_field]';
+    item.querySelectorAll<HTMLElement>(selector).forEach((field) => {
+      highlight_search_field(field, query);
+    });
+  };
+
+  const reset_item_highlights = (item: HTMLElement) => {
+    item.querySelectorAll<HTMLElement>('[data_search_field]').forEach(restore_search_field);
+  };
+
+  const update_search_results = () => {
+    if (!search_input) {
+      return;
+    }
+
+    const search_state = to_search_state(search_input.value);
+    const is_searching = search_state.normalized_query.length > 0;
+    let visible_count = 0;
+
+    if (current_results) {
+      current_results.hidden = is_searching;
+    }
+    if (search_results) {
+      search_results.hidden = !is_searching;
+    }
+    if (pagination) {
+      pagination.hidden = is_searching;
+    }
+    if (page_indicator) {
+      page_indicator.hidden = is_searching;
+    }
+
+    search_result_items.forEach((item) => {
+      const haystack_source = search_state.is_tag_search
+        ? item.getAttribute('data_search_tags') ?? ''
+        : item.getAttribute('data_search_text') ?? item.textContent ?? '';
+      const haystack = normalize_search_text(haystack_source);
+      const should_hide = is_searching && !haystack.includes(search_state.normalized_query);
+      item.hidden = should_hide;
+      reset_item_highlights(item);
+      if (should_hide || !is_searching) {
+        return;
+      } else {
+        update_item_highlights(item, search_state.highlight_query, search_state.is_tag_search);
+      }
+      if (!should_hide) {
+        visible_count += 1;
+      }
+    });
+
+    if (!search_status) {
+      return;
+    }
+
+    search_status.hidden = !is_searching;
+    search_status.textContent = `${visible_count} result${visible_count === 1 ? '' : 's'}`;
+  };
+
+  const initialize_search_query = () => {
+    if (!search_input) {
+      return;
+    }
+
+    const query = new URLSearchParams(window.location.search).get('q');
+    if (query === null || query.trim().length === 0) {
+      return;
+    }
+
+    search_input.value = query;
+    update_search_results();
+  };
+
+  search_input?.addEventListener('input', () => {
+    update_search_results();
+  });
+
+  initialize_search_query();
+</script>

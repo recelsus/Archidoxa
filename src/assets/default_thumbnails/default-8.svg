@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 8</title>
+  <desc id="desc">A high contrast command thumbnail with slate panels and green marks.</desc>
+  <rect width="960" height="540" fill="#1f2933"/>
+  <rect x="82" y="84" width="796" height="372" fill="#111820" stroke="#64748b" stroke-width="3"/>
+  <rect x="122" y="132" width="300" height="24" fill="#bbf7d0"/>
+  <rect x="122" y="204" width="650" height="18" fill="#94a3b8"/>
+  <rect x="122" y="252" width="520" height="18" fill="#64748b"/>
+  <rect x="122" y="300" width="598" height="18" fill="#64748b"/>
+  <rect x="122" y="372" width="178" height="34" fill="#14532d"/>
+  <rect x="328" y="372" width="230" height="34" fill="#14532d"/>
+</svg>

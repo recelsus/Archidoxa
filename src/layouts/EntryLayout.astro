@@ -1,0 +1,21 @@
+---
+import type { EntryDetailViewModel } from '@/application/content/entry_view_models';
+import ArticleEntryLayout from './entry/ArticleEntryLayout.astro';
+import MemoEntryLayout from './entry/MemoEntryLayout.astro';
+
+interface Props {
+  entry: EntryDetailViewModel;
+}
+
+const { entry } = Astro.props;
+const entry_layout_registry = {
+  article: ArticleEntryLayout,
+  memo: MemoEntryLayout,
+};
+const EntryComponent =
+  entry_layout_registry[entry.resolved_entry_layout as keyof typeof entry_layout_registry] ?? ArticleEntryLayout;
+---
+
+<EntryComponent entry={entry}>
+  <slot />
+</EntryComponent>

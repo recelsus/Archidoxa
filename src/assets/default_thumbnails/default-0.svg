@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Default thumbnail 0</title>
+  <desc id="desc">A quiet abstract document thumbnail with teal and graphite blocks.</desc>
+  <rect width="960" height="540" fill="#e9f1f2"/>
+  <rect x="72" y="68" width="816" height="404" fill="#f8faf7" stroke="#8aa0a6" stroke-width="3"/>
+  <rect x="118" y="118" width="360" height="28" fill="#0f6f7a"/>
+  <rect x="118" y="174" width="620" height="18" fill="#8aa0a6"/>
+  <rect x="118" y="220" width="520" height="18" fill="#b9c8cc"/>
+  <rect x="118" y="266" width="660" height="18" fill="#b9c8cc"/>
+  <rect x="118" y="344" width="128" height="48" fill="#d7e8ed"/>
+  <rect x="270" y="344" width="128" height="48" fill="#d7e8ed"/>
+  <rect x="422" y="344" width="128" height="48" fill="#d7e8ed"/>
+</svg>
