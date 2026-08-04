@@ -1,6 +1,12 @@
-# reArchidoxis
+# Archidoxa
 
 Astroテンプレート
+
+## Sample
+
+GitHub Pagesでサンプルページを公開しています
+
+https://recelsus.github.io/Archidoxa/
 
 ## Init
 
@@ -35,10 +41,10 @@ Astroテンプレート
 
 ```ts
 export const site_config = {
-  title: 'reArchidoxis',
+  title: 'Archidoxa',
   description: 'Markdown-first static content site foundation.',
-  footer_text: 'static Astro content foundation / no client framework, CMS, or authentication',
-  theme: 'dark',
+  footer_text: 'static Astro content foundation',
+  theme: 'light',
   social: {
     enabled: true,
     items: [

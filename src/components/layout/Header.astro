@@ -1,6 +1,7 @@
 ---
 import { get_header_navigation } from '@/application/content/content_pages';
 import { site_config } from '@/config/site';
+import { to_site_href } from '@/core/routes';
 
 interface Props {
   current_section_name: string | null;
@@ -29,11 +30,11 @@ const header_context = context_description ? `${title} - ${context_description}`
         </button>
       )
     }
-    <a class="site_title" href="/">{site_config.title}</a>
+    <a class="site_title" href={to_site_href('/')}>{site_config.title}</a>
   </div>
   <div class="header_context">{header_context}</div>
   <nav class="site_header_nav" aria-label="Primary navigation">
-    <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Top</a>
+    <a href={to_site_href('/')} aria-current={Astro.url.pathname === to_site_href('/') ? 'page' : undefined}>Top</a>
     {
       navigation_items.map((item) => (
         <a href={item.href} aria-current={item.current ? 'page' : undefined}>
@@ -41,7 +42,7 @@ const header_context = context_description ? `${title} - ${context_description}`
         </a>
       ))
     }
-    <a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About</a>
+    <a href={to_site_href('/about/')} aria-current={Astro.url.pathname === to_site_href('/about/') ? 'page' : undefined}>About</a>
   </nav>
   <button class="theme_button" type="button" data_theme_toggle aria-label="テーマを切り替え">
     <span class="theme_button__icon" aria-hidden="true"></span>

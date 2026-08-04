@@ -2,6 +2,7 @@
 import type { HeaderNavigationItem } from '@/application/content/content_pages';
 import type { ConfigurablePageConfig } from '@/config/page_config';
 import { site_config } from '@/config/site';
+import { to_site_href } from '@/core/routes';
 
 interface Props {
   page_config: ConfigurablePageConfig;
@@ -29,7 +30,7 @@ const social_links = site_config.social.enabled ? site_config.social.items : [];
       page_config.links.length > 0 && (
         <nav class="config-page__subnav" aria-label="Page links">
           {page_config.links.map((link) => (
-            <a href={link.href}>{link.label}</a>
+            <a href={to_site_href(link.href)}>{link.label}</a>
           ))}
         </nav>
       )
@@ -64,11 +65,11 @@ const social_links = site_config.social.enabled ? site_config.social.items : [];
       }
 
       if (section.kind === 'image') {
-        const image = <img src={section.src} alt={section.alt} loading="lazy" decoding="async" />;
+        const image = <img src={to_site_href(section.src)} alt={section.alt} loading="lazy" decoding="async" />;
 
         return (
           <figure class="config-page__image">
-            {section.href ? <a href={section.href}>{image}</a> : image}
+            {section.href ? <a href={to_site_href(section.href)}>{image}</a> : image}
             {section.caption && <figcaption>{section.caption}</figcaption>}
           </figure>
         );
