@@ -30,7 +30,6 @@ interface HighlightableCode {
 }
 
 const notes_container = document.querySelector<HTMLElement>('[data_notes_container]');
-const notes_placeholder = document.querySelector<HTMLElement>('[data_notes_placeholder]');
 const notes_status = document.querySelector<HTMLElement>('[data_notes_status]');
 const clear_button = document.querySelector<HTMLButtonElement>('[data_clear_notes]');
 const persisted_note_ids_key = 'archidoxa.side_note_ids';
@@ -187,12 +186,14 @@ function current_note_ids(): string[] {
   );
 }
 
-function update_placeholder(): void {
-  if (!notes_container || !notes_placeholder) {
+function update_notes_controls(): void {
+  if (!notes_container) {
     return;
   }
 
-  notes_placeholder.hidden = notes_container.childElementCount > 0;
+  if (clear_button) {
+    clear_button.hidden = notes_container.childElementCount === 0;
+  }
 }
 
 function show_notes_status(message: string): void {
@@ -356,7 +357,7 @@ function remove_note(note_id: string): void {
   set_target_pinned(note_id, false);
   replace_note_url(current_note_ids());
   save_note_entries_to_storage(current_note_ids());
-  update_placeholder();
+  update_notes_controls();
 }
 
 function bind_note_drag(note: HTMLElement, header: HTMLElement): void {
@@ -481,7 +482,7 @@ function create_note(entry: NoteEntry, options: CreateNoteOptions): void {
   }
   save_note_entries_to_storage(current_note_ids());
 
-  update_placeholder();
+  update_notes_controls();
   note.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
   if (options.show_created_status) {
@@ -594,7 +595,7 @@ clear_button?.addEventListener('click', () => {
   });
   replace_note_url([]);
   save_note_entries_to_storage([]);
-  update_placeholder();
+  update_notes_controls();
 });
 
 to_unique_note_ids([...to_note_entries_from_storage(), ...to_note_entries_from_url()]).forEach((note_id) => {
@@ -619,4 +620,4 @@ window.addEventListener('resize', () => {
   }
 });
 
-update_placeholder();
+update_notes_controls();

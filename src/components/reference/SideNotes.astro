@@ -10,10 +10,7 @@ const { popup_index } = Astro.props;
 
 <aside class="notes_region" aria-label="サイドノート">
   <div class="notes_toolbar">
-    <button class="side_note_button" type="button" data_clear_notes aria-label="サイドノートをすべて削除">clear</button>
-  </div>
-  <div class="notes_placeholder" data_notes_placeholder>
-    click an underlined annotation to pin it here
+    <button class="side_note_button" type="button" data_clear_notes aria-label="サイドノートをすべて削除" hidden>clear</button>
   </div>
   <div data_notes_container></div>
   <div class="notes_status" data_notes_status hidden aria-live="polite"></div>

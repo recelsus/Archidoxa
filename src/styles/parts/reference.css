@@ -156,17 +156,6 @@ blockquote {
   margin: 0 auto 10px;
 }
 
-.notes_placeholder {
-  max-width: 28rem;
-  margin-inline: auto;
-  padding-block-start: 1rem;
-  color: color-mix(in srgb, var(--muted) 45%, transparent);
-  font-family: var(--font_mono);
-  font-size: 0.68rem;
-  line-height: 1.6;
-  user-select: none;
-}
-
 .notes_status {
   position: sticky;
   bottom: 0;
