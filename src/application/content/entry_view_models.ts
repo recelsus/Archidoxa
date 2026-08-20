@@ -1,6 +1,6 @@
-import { layout_defaults, list_layout_registry } from '@/config/layouts';
-import { resolve_layout } from '@/core/resolve_layout';
-import { to_entry_href, to_tag_href } from '@/core/routes';
+import { layout_defaults, list_layout_registry } from '../../config/layouts.ts';
+import { resolve_layout } from '../../core/resolve_layout.ts';
+import { to_entry_href, to_tag_href } from '../../core/routes.ts';
 
 export interface ContentEntryData {
   title: string;

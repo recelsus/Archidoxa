@@ -1,4 +1,4 @@
-import { content_sections, type ContentSectionDefinition } from '@/config/content_sections';
+import { content_sections, type ContentSectionDefinition } from '../../config/content_sections.ts';
 
 export function get_configured_sections(): readonly ContentSectionDefinition[] {
   return [...content_sections].sort(

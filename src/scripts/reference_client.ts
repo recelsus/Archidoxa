@@ -1,38 +1,24 @@
-import { strip_line_comments } from '@/core/popup/comment_parser';
-
-interface PopupClientEntry {
-  title?: string;
-  language?: string;
-  content: string;
-}
-
-interface PopupOptions {
-  popup_nocomment: boolean;
-  side_nocomment: boolean;
-}
-
-interface NoteEntry {
-  id: string;
-  title: string;
-  language?: string;
-  content: string;
-}
-
-interface CreateNoteOptions {
-  update_url: boolean;
-  show_created_status: boolean;
-  toggle_existing: boolean;
-}
-
-interface HighlightableCode {
-  language?: string;
-  content: string;
-}
+import { append_highlighted_code } from './reference/code_highlight.ts';
+import { copy_code_text, copy_text } from './reference/clipboard.ts';
+import {
+  replace_note_url,
+  save_note_entries_to_storage,
+  to_note_entries_from_storage,
+  to_note_entries_from_url,
+  to_unique_note_ids,
+} from './reference/note_persistence.ts';
+import { close_popup, position_popup } from './reference/popup_position.ts';
+import {
+  to_display_entry,
+  to_note_id,
+  to_popup_options,
+  to_popup_reference,
+} from './reference/popup_link.ts';
+import type { CreateNoteOptions, NoteEntry, PopupClientEntry } from './reference/types.ts';
 
 const notes_container = document.querySelector<HTMLElement>('[data_notes_container]');
 const notes_status = document.querySelector<HTMLElement>('[data_notes_status]');
 const clear_button = document.querySelector<HTMLButtonElement>('[data_clear_notes]');
-const persisted_note_ids_key = 'archidoxa.side_note_ids';
 let notes_status_timeout: number | undefined;
 
 function get_note_targets(): HTMLElement[] {
@@ -54,48 +40,6 @@ function read_popup_index(): Record<string, PopupClientEntry> {
 }
 
 const popup_index = read_popup_index();
-
-function to_popup_reference(href: string): string | null {
-  if (!href.startsWith('popup:')) {
-    return null;
-  }
-
-  return decodeURIComponent(href.slice('popup:'.length).split('?')[0] ?? '');
-}
-
-function to_popup_options(href: string): PopupOptions {
-  const query = href.split('?')[1] ?? '';
-  const params = new URLSearchParams(query);
-  const nocomment = params.has('nocomment');
-
-  return {
-    popup_nocomment: nocomment || params.has('popup_nocomment'),
-    side_nocomment: nocomment || params.has('side_nocomment'),
-  };
-}
-
-function to_note_id(reference: string, options: PopupOptions): string {
-  const option_suffixes = [];
-
-  if (options.side_nocomment) {
-    option_suffixes.push('side_nocomment');
-  }
-
-  return option_suffixes.length > 0 ? `${reference}?${option_suffixes.join('&')}` : reference;
-}
-
-function to_display_entry(entry: PopupClientEntry, nocomment: boolean): PopupClientEntry {
-  return {
-    title: entry.title,
-    language: entry.language,
-    content: nocomment
-      ? strip_line_comments({
-          language: entry.language,
-          content: entry.content,
-        })
-      : entry.content,
-  };
-}
 
 function make_popup_target(link: HTMLAnchorElement): void {
   const href = link.getAttribute('href') ?? '';
@@ -138,48 +82,6 @@ function make_popup_target(link: HTMLAnchorElement): void {
   }
 }
 
-function to_note_entries_from_url(): string[] {
-  const params = new URLSearchParams(window.location.search);
-  return params.getAll('note');
-}
-
-function to_note_entries_from_storage(): string[] {
-  try {
-    const value = window.localStorage.getItem(persisted_note_ids_key);
-    if (!value) {
-      return [];
-    }
-
-    const parsed = JSON.parse(value) as unknown;
-    if (!Array.isArray(parsed)) {
-      return [];
-    }
-
-    return parsed.filter((item): item is string => typeof item === 'string');
-  } catch {
-    return [];
-  }
-}
-
-function to_unique_note_ids(note_ids: string[]): string[] {
-  return [...new Set(note_ids.filter((note_id) => note_id.length > 0))];
-}
-
-function save_note_entries_to_storage(note_ids: string[]): void {
-  try {
-    window.localStorage.setItem(persisted_note_ids_key, JSON.stringify(to_unique_note_ids(note_ids)));
-  } catch {
-    // Storage may be unavailable in private or restricted browser contexts.
-  }
-}
-
-function replace_note_url(note_ids: string[]): void {
-  const url = new URL(window.location.href);
-  url.searchParams.delete('note');
-  note_ids.forEach((id) => url.searchParams.append('note', id));
-  window.history.replaceState({}, '', url);
-}
-
 function current_note_ids(): string[] {
   return Array.from(document.querySelectorAll<HTMLElement>('[data_side_note_id]')).map(
     (note) => note.getAttribute('data_side_note_id') ?? '',
@@ -209,50 +111,6 @@ function show_notes_status(message: string): void {
     notes_status.hidden = true;
     notes_status.textContent = '';
   }, 1600);
-}
-
-async function copy_text(text: string, button: HTMLButtonElement): Promise<void> {
-  const original_label = button.textContent ?? 'copy';
-
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.append(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
-  }
-
-  button.textContent = 'copied';
-  window.setTimeout(() => {
-    button.textContent = original_label;
-  }, 900);
-}
-
-async function copy_code_text(text: string, button: HTMLButtonElement): Promise<void> {
-  try {
-    await navigator.clipboard.writeText(text);
-  } catch {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.append(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
-  }
-
-  button.setAttribute('data-copy-state', 'copied');
-  button.setAttribute('aria-label', 'コピーしました');
-  window.setTimeout(() => {
-    button.removeAttribute('data-copy-state');
-    button.setAttribute('aria-label', 'コードをコピー');
-  }, 900);
 }
 
 function bind_article_code_copy_buttons(): void {
@@ -302,48 +160,6 @@ function make_note_entry_from_id(note_id: string): NoteEntry | null {
     language: display_entry.language,
     content: display_entry.content,
   };
-}
-
-function append_highlighted_bash_line(container: HTMLElement, line: string): void {
-  const comment_index = line.indexOf('#');
-  const command_part = comment_index >= 0 ? line.slice(0, comment_index) : line;
-  const comment_part = comment_index >= 0 ? line.slice(comment_index) : '';
-  const command_match = /^(\s*)([^\s]+)/.exec(command_part);
-
-  if (!command_match) {
-    container.append(document.createTextNode(command_part));
-  } else {
-    const [, leading_space, command] = command_match;
-    container.append(document.createTextNode(leading_space));
-
-    const command_span = document.createElement('span');
-    command_span.className = 'syntax_command';
-    command_span.textContent = command;
-    container.append(command_span, document.createTextNode(command_part.slice(leading_space.length + command.length)));
-  }
-
-  if (comment_part.length > 0) {
-    const comment_span = document.createElement('span');
-    comment_span.className = 'syntax_comment';
-    comment_span.textContent = comment_part;
-    container.append(comment_span);
-  }
-}
-
-function append_highlighted_code(container: HTMLElement, entry: HighlightableCode): void {
-  const language = (entry.language ?? '').toLowerCase();
-
-  if (!['bash', 'sh', 'shell', 'zsh'].includes(language)) {
-    container.textContent = entry.content;
-    return;
-  }
-
-  entry.content.split('\n').forEach((line, index) => {
-    if (index > 0) {
-      container.append(document.createTextNode('\n'));
-    }
-    append_highlighted_bash_line(container, line);
-  });
 }
 
 function set_target_pinned(note_id: string, pinned: boolean): void {
@@ -488,47 +304,6 @@ function create_note(entry: NoteEntry, options: CreateNoteOptions): void {
   if (options.show_created_status) {
     show_notes_status('Pinned to side notes');
   }
-}
-
-function position_popup(target: HTMLElement): void {
-  const popup = target.querySelector<HTMLElement>('.annotation_popup');
-  if (!popup) {
-    return;
-  }
-
-  target.setAttribute('data-popup-open', 'false');
-  const target_rect = target.getBoundingClientRect();
-  const viewport_gap = 10;
-  const target_gap = 5;
-  popup.style.maxWidth = `${Math.max(220, window.innerWidth - viewport_gap * 2)}px`;
-
-  const popup_rect = popup.getBoundingClientRect();
-  let left = target_rect.left;
-  let top = target_rect.bottom + target_gap;
-
-  if (left + popup_rect.width > window.innerWidth - viewport_gap) {
-    left = window.innerWidth - popup_rect.width - viewport_gap;
-  }
-
-  if (left < viewport_gap) {
-    left = viewport_gap;
-  }
-
-  if (top + popup_rect.height > window.innerHeight - viewport_gap) {
-    top = target_rect.top - popup_rect.height - target_gap;
-  }
-
-  if (top < viewport_gap) {
-    top = viewport_gap;
-  }
-
-  popup.style.left = `${Math.round(left)}px`;
-  popup.style.top = `${Math.round(top)}px`;
-  target.setAttribute('data-popup-open', 'true');
-}
-
-function close_popup(target: HTMLElement): void {
-  target.setAttribute('data-popup-open', 'false');
 }
 
 bind_article_code_copy_buttons();
